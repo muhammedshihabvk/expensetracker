@@ -35,11 +35,14 @@ class _MyHomePageState extends State<MyHomePage> {
   String amount;
 
   final List<Transation> _transations = [
-    // Transation(id: "t1", title: "Car Rent", amount: 2, date: DateTime.now()),
-    // Transation(id: "t6", title: "Milk loan", amount: 300, date: DateTime.now()),
-    // Transation(id: "t4", title: "Bike loan", amount: 500, date: DateTime.now()),
-    // Transation(id: "t5", title: "Bill", amount: 300, date: DateTime.now().subtract(Duration(days: 1))),
-    // Transation(id: "t5", title: "Bill", amount: 300, date: DateTime.now().subtract(Duration(days: 2))),
+    Transation(id: "t1", title: "Car Rent", amount: 2, date: DateTime.now()),
+    Transation(id: "t6", title: "Milk loan", amount: 300, date: DateTime.now()),
+    Transation(id: "t4", title: "Bike loan", amount: 500, date: DateTime.now()),
+    Transation(id: "t5", title: "Bill", amount: 300, date: DateTime.now().subtract(Duration(days: 1))),
+    Transation(id: "t5", title: "Bill", amount: 300, date: DateTime.now().subtract(Duration(days: 2))),
+    Transation(id: "t4", title: "Bike loan", amount: 500, date: DateTime.now()),
+    Transation(id: "t5", title: "Bill", amount: 700, date: DateTime.now().subtract(Duration(days: 3))),
+    Transation(id: "t5", title: "Bill", amount: 900, date: DateTime.now().subtract(Duration(days: 5))),
   ];
 
   List<Transation> get _recentTransation {
@@ -52,15 +55,21 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTrsansation(String title, double amount) {
+  void _addNewTrsansation(String title, double amount,DateTime txDate) {
     final newTransaction = Transation(
         id: DateTime.now().toString() + "tx",
         title: title,
         amount: amount,
-        date: DateTime.now());
+        date: txDate);
     // print("calling set state");
     setState(() {
       _transations.add(newTransaction);
+    });
+  }
+
+  void _deleteTransation(String id){
+    setState(() {
+      _transations.removeWhere((tx) => tx.id == id);
     });
   }
 
@@ -110,8 +119,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Container(
+            width: double.infinity,
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: Text("Last 7 Days statics",style: TextStyle(color: Colors.green,fontWeight: FontWeight.w800),)),
             Chart(recentTransations: _recentTransation),
-            TransationList(transactions: _transations),
+            TransationList(transactions: _transations.reversed.toList(),deleteTrnx: _deleteTransation,),
           ],
         ),
       ),

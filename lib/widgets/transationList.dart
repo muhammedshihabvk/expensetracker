@@ -5,13 +5,14 @@ import 'package:intl/intl.dart';
 
 class TransationList extends StatelessWidget {
   List<Transation> transactions;
+  final Function deleteTrnx;
 
-  TransationList({this.transactions});
+  TransationList({this.transactions,this.deleteTrnx});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height * .55,
+        height: MediaQuery.of(context).size.height * .64,
         child: transactions.length <= 0
             ? Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -29,46 +30,51 @@ class TransationList extends StatelessWidget {
                 itemCount: transactions.length,
                 itemBuilder: (context, index) {
                   return Card(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Text(
-                            "₹${transactions[index].amount.toStringAsFixed(2)}",
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Theme.of(context).primaryColor,
-                              width: 3,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                          ),
-                          margin: EdgeInsets.only(left: 5, right: 20),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              transactions[index].title,
+                    elevation: 7,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            child: Text(
+                              "₹${transactions[index].amount.toStringAsFixed(2)}",
                               style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15),
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            Text(
-                              // transation.date.toString(),
-                              DateFormat('dd-MM-yyyy')
-                                  .format(transactions[index].date),
-                              style: TextStyle(fontSize: 15),
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Theme.of(context).primaryColor,
+                                width: 3,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(5)),
                             ),
-                          ],
-                        )
-                      ],
+                            margin: EdgeInsets.only(left: 5, right: 20),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                transactions[index].title,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                              ),
+                              Text(
+                                // transation.date.toString(),
+                                DateFormat('dd-MM-yyyy')
+                                    .format(transactions[index].date),
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ],
+                          ),
+                          IconButton(icon: Icon(Icons.delete,color: Colors.redAccent,), onPressed: () => deleteTrnx(transactions[index].id)),
+                        ],
+                      ),
                     ),
                   );
                 },
