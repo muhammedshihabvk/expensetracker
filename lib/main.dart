@@ -13,6 +13,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+    // if(Platform.isIOS){
+    //   print("ios");
+    // }else{
+    //   print("android");
+    // }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

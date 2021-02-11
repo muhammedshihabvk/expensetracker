@@ -50,62 +50,69 @@ class _NewTransactionState extends State<NewTransaction> {
   @override
   Widget build(BuildContext context) {
     final node = FocusScope.of(context);
-    return Card(
-      color: Colors.teal,
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              decoration: InputDecoration(labelText: "Title"),
-              controller: titleController,
-              textInputAction: TextInputAction.next,
-              onEditingComplete: () => node.nextFocus(),
-              onSubmitted: (_) => _submitDate,
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: "Amount"),
-              controller: amountController,
-              keyboardType: TextInputType.number,
-              textInputAction: TextInputAction.next,
-              onEditingComplete: () => node.nextFocus(),
-              onSubmitted: (_) => _submitDate,
-            ),
-            Container(
-              height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  FlatButton(
-                    onPressed: _presentDatePicker,
-                    child: Text(
-                      "Choose date",
-                      textScaleFactor: 1.2,
+    return SingleChildScrollView(
+      child: Card(
+        color: Colors.teal,
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 10,
+            right: 10,
+            left: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                decoration: InputDecoration(labelText: "Title"),
+                controller: titleController,
+                textInputAction: TextInputAction.next,
+                onEditingComplete: () => node.nextFocus(),
+                onSubmitted: (_) => _submitDate,
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: "Amount"),
+                controller: amountController,
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.next,
+                onEditingComplete: () => node.nextFocus(),
+                onSubmitted: (_) => _submitDate,
+              ),
+              Container(
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    FlatButton(
+                      onPressed: _presentDatePicker,
+                      child: Text(
+                        "Choose date",
+                        textScaleFactor: 1.2,
+                      ),
+                      textColor: Colors.white,
+                      padding: EdgeInsets.all(0),
                     ),
-                    textColor: Colors.white,
-                    padding: EdgeInsets.all(0),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(_selectedDate == null ? 'No Date Selected!' : "Picked Date: ${DateFormat.yMd().format(_selectedDate)}",style: TextStyle(fontWeight: FontWeight.bold),),
-                ],
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(_selectedDate == null ? 'No Date Selected!' : "Picked Date: ${DateFormat.yMd().format(_selectedDate)}",style: TextStyle(fontWeight: FontWeight.bold),),
+                  ],
+                ),
               ),
-            ),
-            FlatButton(
-              onPressed: _submitDate,
-              child: Text(
-                "Add Transaction",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-              color: Colors.black,
-            )
-          ],
+              FlatButton(
+                onPressed: _submitDate,
+                child: Text(
+                  "Add Transaction",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                color: Colors.black,
+              )
+            ],
+          ),
         ),
       ),
     );
